@@ -9,9 +9,6 @@ function Square({ value, onSquareClick }) {
 }
 
 function Board({ xIsNext, squares, onPlay }) {
-  const [xIsNext, setXIsNext] = useState(true);
-  const[squares, setSquares] = useState(Array(9).fill(null));
-
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) return;
 
@@ -64,8 +61,10 @@ export default function Game() {
   const[history, setHistory] = useState([Array(9).fill(null)]); // array of single item, which is array of 9 nulls
   const currentSquares = history[history.length - 1];
 
+  // Update history array with latest game state and toggles xIsNext.
   function handlePlay(nextSquares) {
-    // TODO
+    setHistory([...history, nextSquares]); // new array of everything in history, followed by nextSquares.
+    setXIsNext(!xIsNext);
   }
 
   return (
