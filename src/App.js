@@ -57,9 +57,10 @@ function Board({ xIsNext, squares, onPlay }) {
 }
 
 export default function Game() {
-  const [xIsNext, setXIsNext] = useState(true);
+  // const [xIsNext, setXIsNext] = useState(true); Removed in favour of xIsNext below
   const[history, setHistory] = useState([Array(9).fill(null)]); // array of single item, which is array of 9 nulls
   const[currentMove, setCurrentMove] = useState(0); // which step the player is currently viewing
+  const xIsNext = currentMove % 2 === 0; // so that it doesn't store xIsNext as a separate state variable
   const currentSquares = history[currentMove];
 
   // Update history array with latest game state and toggles xIsNext.
@@ -67,12 +68,12 @@ export default function Game() {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory); // new array of everything in history, followed by nextSquares.
     setCurrentMove(nextHistory.length - 1);
-    setXIsNext(!xIsNext);
+    // setXIsNext(!xIsNext);
   }
 
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
-    setXIsNext(nextMove % 2 === 0);
+    // setXIsNext(nextMove % 2 === 0);
   }
 
   const moves = history.map((squares, move) => {
